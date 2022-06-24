@@ -10,7 +10,9 @@ from minedojo.data import YouTubeDataset
 
 def worker(url):
     try:
-        cmd = f"yt-dlp -f 'worstvideo[ext=mp4]+worstvideo[height>={args.resolution}]' --write-auto-subs {url} -o '{args.output}/f%(id)s.%(ext)s'"# >/dev/null 2>&1"
+        cmd = f"yt-dlp -f 'worst[ext=mp4]+worst[height>={args.resolution}]' --write-auto-subs {url} -o '{args.output}/f%(id)s.%(ext)s'"
+        if not args.print:
+            cmd += ' /dev/null 2>&1'
         os.system(cmd)
     except:
         return True
@@ -22,6 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output', type=str, required=True)
     parser.add_argument('-r', '--resolution', type=int, default=128)
     parser.add_argument('-w', '--num_workers', type=int, default=32)
+    parser.add_argument('--print', action='store_true')
     args = parser.parse_args()
 
     os.makedirs(args.output, exist_ok=True)
