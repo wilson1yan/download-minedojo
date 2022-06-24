@@ -10,7 +10,7 @@ from minedojo.data import YouTubeDataset
 
 def worker(url):
     try:
-        cmd = f"yt-dlp -f 'worstvideo[ext=mp4]+worstvideo[height>={args.resolution}]' --write-auto-subs {url} -o '{args.output}/f%(id)s.%(ext)s' >/dev/null 2>&1"
+        cmd = f"yt-dlp -f 'worstvideo[ext=mp4]+worstvideo[height>={args.resolution}]' --write-auto-subs {url} -o '{args.output}/f%(id)s.%(ext)s'"# >/dev/null 2>&1"
         os.system(cmd)
     except:
         return True
