@@ -9,10 +9,11 @@ from minedojo.data import YouTubeDataset
 
 
 def worker(url):
+    id = url.split('=')[-1]
     try:
-        cmd = f"yt-dlp -f 'worst[ext=mp4]+worst[height>={args.resolution}]' --write-auto-subs {url} -o '{args.output}/f%(id)s.%(ext)s'"
+        cmd = f"yt-dlp -f '(mp4)worstvideo[height>={args.resolution}]' --write-auto-subs --throttled-rate 200k {url} -o '{args.output}/{id}.%(ext)s'"
         if not args.print:
-            cmd += ' /dev/null 2>&1'
+            cmd += ' >/dev/null 2>&1'
         os.system(cmd)
     except:
         return True
@@ -30,6 +31,9 @@ if __name__ == '__main__':
     os.makedirs(args.output, exist_ok=True)
     
     dset = YouTubeDataset(full=True, download=True)
+    dset = [d for d in dset]
+    dset.sort(key=lambda x: x['duration'])
+    print(dset[:10])
     urls = [d['link'] for d in dset][:1000]
 
     pool = mp.Pool(args.num_workers)
