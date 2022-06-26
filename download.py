@@ -33,8 +33,7 @@ if __name__ == '__main__':
     dset = YouTubeDataset(full=True, download=True)
     dset = [d for d in dset]
     dset.sort(key=lambda x: x['duration'])
-    print(dset[:10])
-    urls = [d['link'] for d in dset][:1000]
+    urls = [d['link'] for d in dset][:400000]
 
     pool = mp.Pool(args.num_workers)
 
