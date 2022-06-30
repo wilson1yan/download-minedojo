@@ -24,7 +24,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-o', '--output', type=str, required=True)
     parser.add_argument('-r', '--resolution', type=int, default=128)
-    parser.add_argument('-w', '--num_workers', type=int, default=32)
+    parser.add_argument('-w', '--num_workers', type=int, default=64)
     parser.add_argument('--print', action='store_true')
     args = parser.parse_args()
 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     dset = YouTubeDataset(full=True, download=True)
     dset = [d for d in dset]
     dset.sort(key=lambda x: x['duration'])
-    urls = [d['link'] for d in dset][:400000]
+    urls = [d['link'] for d in dset]
 
     pool = mp.Pool(args.num_workers)
 
